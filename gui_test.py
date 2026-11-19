@@ -5,7 +5,7 @@ import time
 import tkinter as tk
 from pathlib import Path
 from unittest.mock import patch
-from sniffer.gui import App
+from sniffer.gui import App,make_root
 from sniffer.capture import RawPacket
 
 def pump(root,seconds):
@@ -13,7 +13,7 @@ def pump(root,seconds):
     while time.monotonic()<end:root.update();time.sleep(.01)
 
 def main():
-    root=tk.Tk();root.withdraw();app=App(root);checks={}
+    root=make_root();root.withdraw();app=App(root);checks={}
     try:
         app.bpf.set('tcp port 8088 or udp port 53535');app.start();pump(root,.6);app.demo();pump(root,2.5);app.stop();pump(root,.5)
         checks['live_gui_capture']=app.total>0 and app.session is None

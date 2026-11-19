@@ -42,7 +42,7 @@ def stream_text(packets):
            '同一端点对在不同时间复用连接时仍归为一组；序号跨度需小于 2^31。','']
     for r in results:
         lines.extend([r['direction'],f"唯一字节 {r['unique_bytes']} | 重复字节 {r['duplicate_bytes']} | 冲突字节 {r['conflicting_bytes']} | 缺口 {r['missing_bytes']} | 超限省略 {r['omitted_bytes']}"])
-        lines.extend(c.decode('utf-8',errors='replace') if isinstance(c,bytes) else c for c in r['chunks'])
+        lines.extend(c.decode('utf-8',errors='replace').replace('\r\n','\n') if isinstance(c,bytes) else c for c in r['chunks'])
         lines.append('')
     lines+=['时序记录（基于抓取时间戳）',*timeline]
     return '\n'.join(lines)

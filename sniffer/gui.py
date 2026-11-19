@@ -13,6 +13,15 @@ from .filters import compile_filter, HELP
 from .streams import stream_text
 from .pcapio import read_pcap, write_pcap
 
+def make_root():
+    import os
+    if os.name=='nt':
+        import ctypes
+        try:ctypes.windll.shcore.SetProcessDpiAwareness(1)
+        except (OSError,AttributeError):pass
+    root=tk.Tk();root.tk.call('tk','scaling',1.333333)
+    return root
+
 class App:
     MAX_PACKETS=5000
     MAX_BYTES=16*1024*1024
@@ -68,7 +77,7 @@ class App:
         self.hex=tk.Text(right,wrap='none',font=('Consolas',10),background='#14293d',foreground='#e2edf7',borderwidth=0)
         sy=ttk.Scrollbar(right,command=self.hex.yview);sx=ttk.Scrollbar(right,orient='horizontal',command=self.hex.xview);self.hex.configure(yscrollcommand=sy.set,xscrollcommand=sx.set,state='disabled');sy.pack(side='right',fill='y');sx.pack(side='bottom',fill='x');self.hex.pack(fill='both',expand=True)
         self.status=tk.StringVar(value='选择网卡后开始抓包；演示建议选择 Loopback，过滤 tcp port 8088 or udp port 53535。')
-        ttk.Label(base,textvariable=self.status,wraplength=1200,foreground='#475569').pack(fill='x',pady=(8,0))
+        ttk.Label(base,textvariable=self.status,wraplength=1200,foreground='#475569').pack(side='bottom',fill='x',pady=(8,0),before=panes)
         root.protocol('WM_DELETE_WINDOW',self.close);self.refresh();root.after(50,self.poll)
 
     def refresh(self):
@@ -152,10 +161,10 @@ class App:
         p=self.records.get(int(selected[0]))
         if p is None:return
         self.fields.delete(*self.fields.get_children())
-        root=self.fields.insert('','end',text='Frame',open=True)
+        root=self.fields.insert('','end',text='Frame',open=False)
         for key,value in {'时间戳':f'{p.raw.timestamp:.6f}','线上长度':p.raw.wire_length,'抓取长度':len(p.raw.data),'链路类型':p.raw.linktype,'注意':p.warning or '无'}.items():self.fields.insert(root,'end',text=key,values=(value,))
         for layer,values in p.details:
-            parent=self.fields.insert('','end',text=layer,open=True)
+            parent=self.fields.insert('','end',text=layer,open=layer in ('TCP','UDP',p.protocol))
             for key,value in values.items():self.fields.insert(parent,'end',text=key,values=(value,))
         self.set_text(self.hex,hexdump(p.raw.data))
 
@@ -202,7 +211,18 @@ class App:
         else:self.root.destroy()
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--open',dest='pcap');args=parser.parse_args()
-    root=tk.Tk();app=App(root)
+    parser=argparse.ArgumentParser();parser.add_argument('--open',dest='pcap');parser.add_argument('--self-test',metavar='RESULT_JSON');args=parser.parse_args()
+    root=make_root();app=App(root)
     if args.pcap:root.after(100,lambda:app.load(args.pcap))
+    if args.self_test:
+        import json
+        from pathlib import Path
+        def begin():
+            app.bpf.set('tcp port 8088 or udp port 53535');app.start()
+        def finish():
+            if app.session:root.after(100,finish);return
+            result={'packets':app.total,'http_packets':sum(p.protocol=='HTTP' for p in app.records.values()),'last_error':app.last_error}
+            result['passed']=result['http_packets']>=6 and not result['last_error']
+            Path(args.self_test).write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8');root.destroy()
+        root.after(100,begin);root.after(800,app.demo);root.after(3500,app.stop);root.after(4000,finish)
     root.mainloop()

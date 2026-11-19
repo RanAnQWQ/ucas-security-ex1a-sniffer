@@ -36,20 +36,23 @@ def main():
     folder=Path(__file__).parent/'evidence';folder.mkdir(exist_ok=True)
     api=Npcap();results={'npcap':api.version,'time':datetime.now(timezone(timedelta(hours=8))).isoformat(),'checks':{}}
     session=CaptureSession(r'\Device\NPF_Loopback','tcp port 8088 or udp port 53535');session.start();wait_ready(session)
-    generate();raws=finish(session);packets=[decode(p) for p in raws]
+    generate()
+    with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as excluded:
+        for _ in range(3):excluded.sendto(b'EX1A_MUST_BE_FILTERED_OUT',('127.0.0.1',53536))
+    raws=finish(session);packets=[decode(p) for p in raws]
     checks=results['checks'];checks['localhost_capture']=len(packets)>0
     checks['timestamp_valid']=all(abs(time.time()-p.raw.timestamp)<60 for p in packets)
     checks['http_request']=any(p.protocol=='HTTP' and p.info.startswith('GET ') for p in packets)
     checks['http_response']=any(p.protocol=='HTTP' and p.info.startswith('HTTP/1.1 200') for p in packets)
     checks['udp_capture']=sum(p.protocol=='UDP' for p in packets)>=5
-    checks['bpf_only_requested_ports']=all(8088 in (p.sport,p.dport) or 53535 in (p.sport,p.dport) for p in packets)
+    checks['bpf_only_requested_ports']=all((8088 in (p.sport,p.dport) or 53535 in (p.sport,p.dport)) and b'EX1A_MUST_BE_FILTERED_OUT' not in p.raw.data for p in packets)
     checks['clean_shutdown']=not session.running
     tcp=[p for p in packets if p.flow_key];flow=[p for p in packets if p.flow_key==tcp[0].flow_key]
     stream=stream_text(flow);checks['stream_request_and_response']='GET /experiment/' in stream and 'Hello EX1A!' in stream
     write_pcap(folder/'demo.pcap',raws);checks['pcap_exact_roundtrip']=all(a.data==b.data and abs(a.timestamp-b.timestamp)<.000002 for a,b in zip(raws,read_pcap(folder/'demo.pcap')))
     results['packets']=len(packets);results['protocol_counts']={proto:sum(p.protocol==proto for p in packets) for proto in sorted({p.protocol for p in packets})}
     results['queue_drops']=session.queue_drops;results['driver_stats']=session.driver_stats
-    (folder/'tcp_stream.txt').write_text(stream,encoding='utf-8')
+    (folder/'tcp_stream.txt').write_text(stream,encoding='utf-8',newline='\n')
     invalid=CaptureSession(r'\Device\NPF_Loopback','this is invalid bpf !!!');invalid.start();invalid.thread.join(3)
     checks['invalid_bpf_rejected']=any(kind=='error' for kind,_ in list(invalid.events.queue)) and not invalid.running
     for i in range(3):
