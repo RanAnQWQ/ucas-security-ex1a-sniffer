@@ -1,6 +1,6 @@
 {
   "npcap": "Npcap version 1.90, based on libpcap version 1.10.7 (64-bit time_t)",
-  "time": "2026-11-20T01:10:55.654067+08:00",
+  "time": "2026-11-20T01:20:52.919202+08:00",
   "checks": {
     "localhost_capture": true,
     "timestamp_valid": true,

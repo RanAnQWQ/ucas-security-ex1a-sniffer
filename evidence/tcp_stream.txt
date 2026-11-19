@@ -2,73 +2,73 @@ TCP 双向流分析
 仅重组当前保留的数据；中途开始抓包无法判断此前缺失的数据。
 同一端点对在不同时间复用连接时仍归为一组；序号跨度需小于 2^31。
 
-[127.0.0.1]:59788 → [127.0.0.1]:8088
+[127.0.0.1]:64609 → [127.0.0.1]:8088
 唯一字节 324 | 重复字节 0 | 冲突字节 0 | 缺口 0 | 超限省略 0
-GET /experiment/1 HTTP/1.1
-Host: 127.0.0.1:8088
-Accept-Encoding: identity
-User-Agent: EX1A-local-demo
-
-GET /experiment/2 HTTP/1.1
-Host: 127.0.0.1:8088
-Accept-Encoding: identity
-User-Agent: EX1A-local-demo
-
-GET /experiment/3 HTTP/1.1
-Host: 127.0.0.1:8088
-Accept-Encoding: identity
-User-Agent: EX1A-local-demo
-
+GET /experiment/1 HTTP/1.1
+Host: 127.0.0.1:8088
+Accept-Encoding: identity
+User-Agent: EX1A-local-demo
+
+GET /experiment/2 HTTP/1.1
+Host: 127.0.0.1:8088
+Accept-Encoding: identity
+User-Agent: EX1A-local-demo
+
+GET /experiment/3 HTTP/1.1
+Host: 127.0.0.1:8088
+Accept-Encoding: identity
+User-Agent: EX1A-local-demo
 
 
-[127.0.0.1]:8088 → [127.0.0.1]:59788
+
+[127.0.0.1]:8088 → [127.0.0.1]:64609
 唯一字节 561 | 重复字节 0 | 冲突字节 0 | 缺口 0 | 超限省略 0
-HTTP/1.1 200 OK
-Server: BaseHTTP/0.6 Python/3.12.4
-Date: Thu, 19 Nov 2026 17:10:55 GMT
-Content-Type: text/plain
-Content-Length: 49
-
+HTTP/1.1 200 OK
+Server: BaseHTTP/0.6 Python/3.12.4
+Date: Thu, 19 Nov 2026 17:20:52 GMT
+Content-Type: text/plain
+Content-Length: 49
+
 Hello EX1A! This is real localhost HTTP traffic.
-HTTP/1.1 200 OK
-Server: BaseHTTP/0.6 Python/3.12.4
-Date: Thu, 19 Nov 2026 17:10:55 GMT
-Content-Type: text/plain
-Content-Length: 49
-
+HTTP/1.1 200 OK
+Server: BaseHTTP/0.6 Python/3.12.4
+Date: Thu, 19 Nov 2026 17:20:53 GMT
+Content-Type: text/plain
+Content-Length: 49
+
 Hello EX1A! This is real localhost HTTP traffic.
-HTTP/1.1 200 OK
-Server: BaseHTTP/0.6 Python/3.12.4
-Date: Thu, 19 Nov 2026 17:10:55 GMT
-Content-Type: text/plain
-Content-Length: 49
-
+HTTP/1.1 200 OK
+Server: BaseHTTP/0.6 Python/3.12.4
+Date: Thu, 19 Nov 2026 17:20:53 GMT
+Content-Type: text/plain
+Content-Length: 49
+
 Hello EX1A! This is real localhost HTTP traffic.
 
 
 时序记录（基于抓取时间戳）
- 0.000000s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836429 flags=0x02 bytes=0
- 0.000102s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490106 flags=0x12 bytes=0
- 0.000171s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836430 flags=0x10 bytes=0
- 0.000350s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836430 flags=0x18 bytes=108
- 0.000408s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490107 flags=0x10 bytes=0
- 0.001284s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490107 flags=0x18 bytes=138
- 0.001367s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836538 flags=0x10 bytes=0
- 0.001619s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490245 flags=0x18 bytes=49
- 0.001688s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836538 flags=0x10 bytes=0
- 0.152508s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836538 flags=0x18 bytes=108
- 0.152578s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490294 flags=0x10 bytes=0
- 0.153185s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490294 flags=0x18 bytes=138
- 0.153260s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836646 flags=0x10 bytes=0
- 0.153634s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490432 flags=0x18 bytes=49
- 0.153702s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836646 flags=0x10 bytes=0
- 0.304189s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836646 flags=0x18 bytes=108
- 0.304272s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490481 flags=0x10 bytes=0
- 0.304843s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490481 flags=0x18 bytes=138
- 0.304955s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836754 flags=0x10 bytes=0
- 0.305273s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490619 flags=0x18 bytes=49
- 0.305339s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836754 flags=0x10 bytes=0
- 0.456111s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836754 flags=0x11 bytes=0
- 0.456230s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490668 flags=0x10 bytes=0
- 0.456375s  [127.0.0.1]:8088 → [127.0.0.1]:59788  seq=898490668 flags=0x11 bytes=0
- 0.456477s  [127.0.0.1]:59788 → [127.0.0.1]:8088  seq=1130836755 flags=0x10 bytes=0
+ 0.000000s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381006 flags=0x02 bytes=0
+ 0.000097s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877503 flags=0x12 bytes=0
+ 0.000160s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381007 flags=0x10 bytes=0
+ 0.000429s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381007 flags=0x18 bytes=108
+ 0.000482s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877504 flags=0x10 bytes=0
+ 0.001184s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877504 flags=0x18 bytes=138
+ 0.001236s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381115 flags=0x10 bytes=0
+ 0.001636s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877642 flags=0x18 bytes=49
+ 0.001722s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381115 flags=0x10 bytes=0
+ 0.152467s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381115 flags=0x18 bytes=108
+ 0.152538s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877691 flags=0x10 bytes=0
+ 0.153004s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877691 flags=0x18 bytes=138
+ 0.153042s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381223 flags=0x10 bytes=0
+ 0.153365s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877829 flags=0x18 bytes=49
+ 0.153427s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381223 flags=0x10 bytes=0
+ 0.303748s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381223 flags=0x18 bytes=108
+ 0.303808s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877878 flags=0x10 bytes=0
+ 0.304116s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719877878 flags=0x18 bytes=138
+ 0.304147s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381331 flags=0x10 bytes=0
+ 0.304411s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719878016 flags=0x18 bytes=49
+ 0.304465s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381331 flags=0x10 bytes=0
+ 0.454802s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381331 flags=0x11 bytes=0
+ 0.454864s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719878065 flags=0x10 bytes=0
+ 0.455007s  [127.0.0.1]:8088 → [127.0.0.1]:64609  seq=2719878065 flags=0x11 bytes=0
+ 0.455075s  [127.0.0.1]:64609 → [127.0.0.1]:8088  seq=640381332 flags=0x10 bytes=0

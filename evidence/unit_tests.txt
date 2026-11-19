@@ -35,6 +35,6 @@ test_sequence_wrap (test_core.StreamTests.test_sequence_wrap) ... ok
 test_syn_sequence_consumption (test_core.StreamTests.test_syn_sequence_consumption) ... ok
 
 ----------------------------------------------------------------------
-Ran 35 tests in 0.027s
+Ran 35 tests in 0.046s
 
 OK
