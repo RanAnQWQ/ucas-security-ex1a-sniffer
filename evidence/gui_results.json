@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "live_gui_capture": true,
+    "display_filter_http": true,
+    "filter_preserves_packets": true,
+    "details_and_hex": true,
+    "tcp_stream_window": true,
+    "invalid_filter_message": true,
+    "gui_save_load": true,
+    "bounded_store": true,
+    "rendered_rows_evicted": true,
+    "clear_resets_all": true
+  },
+  "passed": true
+}

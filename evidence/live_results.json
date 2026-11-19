@@ -1,0 +1,31 @@
+{
+  "npcap": "Npcap version 1.90, based on libpcap version 1.10.7 (64-bit time_t)",
+  "time": "2026-11-20T01:10:55.654067+08:00",
+  "checks": {
+    "localhost_capture": true,
+    "timestamp_valid": true,
+    "http_request": true,
+    "http_response": true,
+    "udp_capture": true,
+    "bpf_only_requested_ports": true,
+    "clean_shutdown": true,
+    "stream_request_and_response": true,
+    "pcap_exact_roundtrip": true,
+    "invalid_bpf_rejected": true,
+    "repeat_start_stop": true,
+    "wifi_capture": true
+  },
+  "packets": 30,
+  "protocol_counts": {
+    "HTTP": 6,
+    "TCP": 19,
+    "UDP": 5
+  },
+  "queue_drops": 0,
+  "driver_stats": {
+    "received": 30,
+    "dropped": 0,
+    "interface_dropped": 0
+  },
+  "passed": true
+}

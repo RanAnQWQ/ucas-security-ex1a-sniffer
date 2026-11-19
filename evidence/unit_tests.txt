@@ -1,0 +1,40 @@
+test_addresses (test_core.FilterTests.test_addresses) ... ok
+test_invalid_rejected (test_core.FilterTests.test_invalid_rejected) ... ok
+test_parentheses (test_core.FilterTests.test_parentheses) ... ok
+test_precedence (test_core.FilterTests.test_precedence) ... ok
+test_protocol_layer_membership (test_core.FilterTests.test_protocol_layer_membership) ... ok
+test_big_endian_nanoseconds (test_core.PcapTests.test_big_endian_nanoseconds) ... ok
+test_file_limits (test_core.PcapTests.test_file_limits) ... ok
+test_mixed_links_rejected (test_core.PcapTests.test_mixed_links_rejected) ... ok
+test_roundtrip (test_core.PcapTests.test_roundtrip) ... ok
+test_truncated_record (test_core.PcapTests.test_truncated_record) ... ok
+test_arp (test_core.ProtocolTests.test_arp) ... ok
+test_dns_compression_cycle (test_core.ProtocolTests.test_dns_compression_cycle) ... ok
+test_dns_question (test_core.ProtocolTests.test_dns_question) ... ok
+test_every_truncation (test_core.ProtocolTests.test_every_truncation) ... ok
+test_http_on_nonstandard_port (test_core.ProtocolTests.test_http_on_nonstandard_port) ... ok
+test_icmp (test_core.ProtocolTests.test_icmp) ... ok
+test_icmpv6 (test_core.ProtocolTests.test_icmpv6) ... ok
+test_ipv4_fragment_not_misparsed (test_core.ProtocolTests.test_ipv4_fragment_not_misparsed) ... ok
+test_ipv6_extension (test_core.ProtocolTests.test_ipv6_extension) ... ok
+test_ipv6_fragment_not_misparsed (test_core.ProtocolTests.test_ipv6_fragment_not_misparsed) ... ok
+test_ipv6_udp (test_core.ProtocolTests.test_ipv6_udp) ... ok
+test_loopback (test_core.ProtocolTests.test_loopback) ... ok
+test_port_not_identity (test_core.ProtocolTests.test_port_not_identity) ... ok
+test_random_malformed_frames (test_core.ProtocolTests.test_random_malformed_frames) ... ok
+test_tcp_invalid_header (test_core.ProtocolTests.test_tcp_invalid_header) ... ok
+test_tls_header (test_core.ProtocolTests.test_tls_header) ... ok
+test_udp_short_length (test_core.ProtocolTests.test_udp_short_length) ... ok
+test_vlan (test_core.ProtocolTests.test_vlan) ... ok
+test_bidirectional_key (test_core.StreamTests.test_bidirectional_key) ... ok
+test_conflicting_overlap (test_core.StreamTests.test_conflicting_overlap) ... ok
+test_gap_preserved (test_core.StreamTests.test_gap_preserved) ... ok
+test_memory_cap (test_core.StreamTests.test_memory_cap) ... ok
+test_out_of_order_and_retransmission (test_core.StreamTests.test_out_of_order_and_retransmission) ... ok
+test_sequence_wrap (test_core.StreamTests.test_sequence_wrap) ... ok
+test_syn_sequence_consumption (test_core.StreamTests.test_syn_sequence_consumption) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.027s
+
+OK
