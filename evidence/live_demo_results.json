@@ -1,0 +1,8 @@
+{
+  "core_tests": true,
+  "compile": true,
+  "capture_count": 30,
+  "http_count": 6,
+  "errors": "",
+  "passed": true
+}
