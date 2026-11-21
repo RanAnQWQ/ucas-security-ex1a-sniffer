@@ -26,7 +26,7 @@ class App:
     MAX_PACKETS=5000
     MAX_BYTES=16*1024*1024
     def __init__(self, root):
-        self.root=root;root.title('澄流 · 网络嗅探器 | 实验 1A');root.geometry('1280x850');root.minsize(1000,700)
+        self.root=root;root.title('网络嗅探器 | 实验 1A');root.geometry('1280x850');root.minsize(1000,700)
         self.records=collections.OrderedDict();self.next_id=1;self.bytes=0;self.evicted=0;self.total=0;self.session=None;self.stopping=False
         self.predicate=lambda p:True;self.devices=[];self.open_streams=[];self.last_error='';self.counts=collections.Counter();self.demo_events=queue.Queue();self.demo_running=False
         style=ttk.Style();style.theme_use('clam')
@@ -37,7 +37,7 @@ class App:
         style.configure('Accent.TButton',foreground='white',background='#167d8d')
         base=ttk.Frame(root,padding=14);base.pack(fill='both',expand=True)
         header=ttk.Frame(base);header.pack(fill='x')
-        ttk.Label(header,text='澄流  /  网络嗅探器',style='Title.TLabel').pack(side='left')
+        ttk.Label(header,text='网络嗅探器',style='Title.TLabel').pack(side='left')
         ttk.Label(header,text='EX1A · 安然 · 202628015059001',foreground='#64748b').pack(side='right')
         controls=ttk.Frame(base);controls.pack(fill='x',pady=(12,6))
         ttk.Label(controls,text='网卡').pack(side='left')
